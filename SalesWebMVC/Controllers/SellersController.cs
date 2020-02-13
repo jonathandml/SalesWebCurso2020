@@ -9,7 +9,7 @@ using SalesWebMVC.Services;
 
 namespace SalesWebMVC.Controllers
 {
-    
+
     public class SellersController : Controller
     {
         private readonly SellerService _sellerService;
@@ -38,20 +38,20 @@ namespace SalesWebMVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Seller seller)
         {
-            
+
             _sellerService.Insert(seller);
             return RedirectToAction(nameof(Index));
         }
         //GET delete
         public IActionResult Delete(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
             var obj = _sellerService.FindById(id.Value);
-            if(obj == null)
+            if (obj == null)
             {
                 return NotFound();
             }
@@ -64,6 +64,21 @@ namespace SalesWebMVC.Controllers
         {
             _sellerService.Remove(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var obj = _sellerService.FindById(id.Value);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
         }
     }
 }
